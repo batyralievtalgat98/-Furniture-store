@@ -27,12 +27,12 @@ import { Badge, InputBase } from '@mui/material';
 const pages = [
   { name: 'HOME', link: '/', id: 1 },
 
-  { name: 'STORE', link: '/', id: 2 },
+  { name: 'STORE', link: '/store', id: 2 },
   { name: 'ACCESSORIES', link: '/', id: 3 },
   { name: 'BRAND', link: '/', id: 4 },
   { name: 'ABOUT US', link: '/about', id: 5 },
   { name: 'CONTACT US', link: '/', id: 6 },
-  { name: 'ADMIN PAGE', link: '/adminPage', id: 6 },
+  { name: 'ADMIN PAGE', link: '/adminPage', id: 7 },
   
 ];
 
