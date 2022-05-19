@@ -21,7 +21,7 @@ const MainRoutes = () => {
     {
       link: '/about',
       element: <AboutPage/>,
-      id:2,
+      id:3,
     },  
   ]
   return (
