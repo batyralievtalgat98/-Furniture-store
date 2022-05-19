@@ -11,11 +11,12 @@ const AddProduct = () => {
   const navigate = useNavigate()
 
   const [product, setProduct]= useState({
-    name: '',
-    description: '',
-    price: 0,
-    // picture: '',
-    // type:''
+category: '',
+name: '',
+price: '',
+description: '',
+made_in: '',
+image: '',
   })
 
   const handleInp = (e)=>{
@@ -37,9 +38,9 @@ const AddProduct = () => {
       sx={{marginBottom: '10px', borderColor: 'black' }}
         fullWidth
         id="outlined-basic"
-        label="Name"
+        label="Category"
         variant="outlined"
-        name='name'
+        name='category'
         size="small"
         onChange={handleInp}
         
@@ -48,9 +49,9 @@ const AddProduct = () => {
       sx={{marginBottom: '10px', borderColor: 'black' }}
         fullWidth
         id="outlined-basic"
-        label="Description"
+        label="Name"
         variant="outlined"
-        name='description' 
+        name='name' 
         size="small"
         onChange={handleInp}
         
@@ -71,9 +72,9 @@ const AddProduct = () => {
       sx={{marginBottom: '10px', borderColor: 'black',backgroundColor: 'whitesmoke' }}
         fullWidth
         id="outlined-basic"
-        label="Picture"
+        label="Description"
         variant="outlined"
-        name='picture'
+        name='description'
         size="small"
         onChange={handleInp}
         
@@ -83,13 +84,27 @@ const AddProduct = () => {
       sx={{marginBottom: '10px', borderColor: 'black',backgroundColor: 'whitesmoke' }}
         fullWidth
         id="outlined-basic"
-        label="Type"
+        label="Made in ..."
         variant="outlined"
-        name='type'
+        name='made_in'
         size="small"
         onChange={handleInp}
         
       />
+                  <TextField
+      
+      sx={{marginBottom: '10px', borderColor: 'black',backgroundColor: 'whitesmoke' }}
+        fullWidth
+        id="outlined-helperText"
+
+        helperText="Вставьте картинку"
+        name='picture'
+        size="small"
+        onChange={handleInp}
+        type='file'
+        defaultValue="Default Value"
+      />
+    
       <Button
       sx={{marginBottom: '10px', borderColor: 'black', color: 'black', backgroundColor: 'whitesmoke' }}
         variant="outlined"

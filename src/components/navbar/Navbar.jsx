@@ -12,11 +12,15 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 
+import FavoriteIcon from '@mui/icons-material/Favorite';
+
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+
 import { Link} from 'react-router-dom';
 
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
-import { InputBase } from '@mui/material';
+import { Badge, InputBase } from '@mui/material';
 
 
 
@@ -28,8 +32,8 @@ const pages = [
   { name: 'BRAND', link: '/', id: 4 },
   { name: 'ABOUT US', link: '/about', id: 5 },
   { name: 'CONTACT US', link: '/', id: 6 },
+  { name: 'ADMIN PAGE', link: '/adminPage', id: 6 },
   
-
 ];
 
 
@@ -195,7 +199,7 @@ const Navbar = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0, display: 'flex' }}>
-          <Search sx={{mr: '10px'}}>
+          <Search sx={{mr: '10px', display:{xs: 'none',sm: 'block'}}} >
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -204,6 +208,16 @@ const Navbar = () => {
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
+         <FavoriteIcon 
+          sx={{fontSize: '30px', mt:'5px', mr:'5px'}}
+         />
+          <Badge badgeContent={4} color="primary" sx={{mr:'10px',mt:'5px'}}>
+
+          <ShoppingCartIcon 
+          sx={{fontSize: '30px', }}
+         />
+          </Badge>
+
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
