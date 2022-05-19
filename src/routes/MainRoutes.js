@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+import AdminPage from '../pages/AdminPage';
 import HomePage from '../pages/HomePage';
 
 const MainRoutes = () => {
@@ -8,6 +9,11 @@ const MainRoutes = () => {
     {
       link: '/',
       element: <HomePage/>,
+      id:1,
+    }, 
+    {
+      link: '/adminPage',
+      element: <AdminPage/>,
       id:1,
     }, 
   ]
