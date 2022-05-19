@@ -16,7 +16,7 @@ name: '',
 price: '',
 description: '',
 made_in: '',
-image: '',
+picture: '',
   })
 
   const handleInp = (e)=>{
@@ -91,7 +91,7 @@ image: '',
         onChange={handleInp}
         
       />
-                  <TextField
+      <TextField
       
       sx={{marginBottom: '10px', borderColor: 'black',backgroundColor: 'whitesmoke' }}
         fullWidth
@@ -102,7 +102,7 @@ image: '',
         size="small"
         onChange={handleInp}
         type='file'
-        defaultValue="Default Value"
+      
       />
     
       <Button

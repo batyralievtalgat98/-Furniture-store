@@ -42,12 +42,19 @@ const CrudContextProvider = ({ children }) => {
       payload: data
     })
   }
+  const getProductDetails = async (id) => {
+    const { data } = await axios(`${API}/${id}`);
+    dispatch({
+      type: 'GET_PRODUCT_DETAILS',
+      payload: data,
+    });
+  };
 
   const addProduct = async (newProduct) => {
     const config ={
-      headers: {'Content-Type': 'nultipart/form-data'},
+      headers: {'Content-Type': 'multipart/form-data'},
     };
-    await axios.post(API, newProduct,config)
+    await axios.post(API, newProduct)
     getProducts()
   }
 
@@ -58,9 +65,9 @@ const CrudContextProvider = ({ children }) => {
 
   const saveEditedProduct = async (newProduct) => {
     const config ={
-      headers: {'Content-Type': 'nultipart/form-data'},
+      headers: {'Content-Type': 'multipart/form-data'},
     };
-    await axios.patch(`${API}/${newProduct.id}`, newProduct,config);
+    await axios.patch(`${API}/${newProduct.id}`, newProduct);
     getProducts()
 
   }
@@ -72,6 +79,7 @@ const CrudContextProvider = ({ children }) => {
     getProducts,
     deleteProduct,
     saveEditedProduct,
+    getProductDetails
   
 
   }}

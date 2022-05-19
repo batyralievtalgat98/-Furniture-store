@@ -1,12 +1,31 @@
 {
   "products": [
     {
-      "name": "sd",
-      "description": "sd",
-      "price": "ds",
-      "picture": "ds",
-      "type": "ds",
+      "category": "adsfddddddddddddd",
+      "name": "asdfsssssssss",
+      "price": "sadf",
+      "description": "asdfssssssssssssss",
+      "made_in": "asdf",
+      "image": "",
       "id": 1
+    },
+    {
+      "category": "sdg",
+      "name": "dsfg",
+      "price": "sdfg",
+      "description": "dsfg",
+      "made_in": "dsf",
+      "image": "",
+      "id": 2
+    },
+    {
+      "category": "g",
+      "name": "sd",
+      "price": "gdsgfdfdfffddfdfdf",
+      "description": "gsdf",
+      "made_in": "sdf",
+      "picture": "C:\\fakepath\\Аннотация 2022-05-11 230312.png",
+      "id": 3
     }
   ]
 }
