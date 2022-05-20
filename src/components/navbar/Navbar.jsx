@@ -36,8 +36,12 @@ const pages = [
   
 ];
 
+const settings=[
+  {name: 'Registration', link: '/register'},
+  {name: 'Authorization', link: '/login'},
+]
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+// const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -240,10 +244,23 @@ const Navbar = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
+                <Link to={setting.link} key={setting.id}>
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  <Typography textAlign="center">{setting.name}</Typography>
                 </MenuItem>
+                </Link>
               ))}
+               {/* {pages.map((page) => (
+              <Link to={page.link} key={page.id}>
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{ ml: 'auto',my: 2, color: 'black', display: 'block'}}
+                  className='navbar-item'
+                >
+                  {page.name}
+                </Button>
+              </Link>
+            ))} */}
             </Menu>
           </Box>
         </Toolbar>

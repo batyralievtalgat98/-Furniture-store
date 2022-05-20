@@ -101,9 +101,9 @@ const CrudContextProvider = ({ children }) => {
     getProducts,
     deleteProduct,
     saveEditedProduct,
-    getProductDetails
+    getProductDetails,
   
-
+    
   }}
   >{children}</productContext.Provider>
 };

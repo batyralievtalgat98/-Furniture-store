@@ -1,5 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+import Login from '../components/authorization/Login';
+import Register from '../components/authorization/Register';
 
 import AboutPage from '../pages/AboutPage';
 import AdminPage from '../pages/AdminPage';
@@ -34,7 +36,18 @@ const MainRoutes = () => {
      link: '/edit/:id',
       element: <EditProductPage />,
       id: 5,
-    }
+    },
+    {
+      link: '/login',
+       element: <Login />,
+       id: 6,
+     }
+     ,
+     {
+      link: '/register',
+       element: <Register />,
+       id: 7,
+     }
   ]
   return (
     <>
