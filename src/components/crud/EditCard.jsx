@@ -113,7 +113,7 @@ const EditCard = () => {
       size="large"
   onClick={()=>saveEditedProduct(product)}
     >
-     Add product
+     Edit product
     </Button>
   </Box>
   );
