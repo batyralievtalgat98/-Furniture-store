@@ -5,6 +5,7 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 
+import './Footer.css'
 
 const Footer = () => {
   function Copyright(props) {
@@ -22,7 +23,8 @@ const Footer = () => {
       pb={{ xs: 3, sm: 3 }}
       mb={{ xs: 10, sm: 10 }}
       bgcolor="#323334"
-      color=" #FFFFFF"
+      sx={{color: 'white'}}
+      id='footer'
     >
       <Container maxWidth="lg">
         <Grid container spacing={8}>
@@ -50,7 +52,8 @@ const Footer = () => {
                 contact@urbanoutfitters.com
               </Link>
               <Box sx={{display: 'flex', flexDirection: 'row',justifyContent:"space-between", fontSize: '0.4rem'}}
-             my={{ xs: 1, sm: 2 }} 
+             my={{ xs: 1, sm: 2
+             }} 
              >
              <p><FacebookIcon/></p>
             <p><TwitterIcon/></p>
