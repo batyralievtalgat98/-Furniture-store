@@ -1,4 +1,4 @@
-import { Box, Button, TextField } from '@mui/material';
+import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProducts } from '../../context/CrudContextProvider';
@@ -11,13 +11,13 @@ const AddProduct = () => {
   const navigate = useNavigate()
 
   const [product, setProduct]= useState({
+    name: '',
 category: '',
-name: '',
 price: '',
 description: '',
 made_in: '',
-picture: '',
   })
+
 
   const handleInp = (e)=>{
    
@@ -26,10 +26,16 @@ picture: '',
         [e.target.name]: e.target.value,
       }
       setProduct(obj)
-    
+
+
+
   }
 
+  const [age, setAge] = React.useState('');
 
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
 
 
   return (
@@ -43,8 +49,24 @@ picture: '',
         name='category'
         size="small"
         onChange={handleInp}
-        
       />
+
+{/* <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">Category</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          // value={age}
+          // label="Age"
+          name='category'
+          onChange={handleInp}
+        >
+          <MenuItem value={10}>Tables</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+          <MenuItem value={30}>Thirty</MenuItem>
+        </Select>
+      </FormControl> */}
+      
       <TextField
       sx={{marginBottom: '10px', borderColor: 'black' }}
         fullWidth
@@ -91,7 +113,7 @@ picture: '',
         onChange={handleInp}
         
       />
-      <TextField
+      {/* <TextField
       
       sx={{marginBottom: '10px', borderColor: 'black',backgroundColor: 'whitesmoke' }}
         fullWidth
@@ -103,7 +125,7 @@ picture: '',
         onChange={handleInp}
         type='file'
       
-      />
+      /> */}
     
       <Button
       sx={{marginBottom: '10px', borderColor: 'black', color: 'black', backgroundColor: 'whitesmoke' }}
