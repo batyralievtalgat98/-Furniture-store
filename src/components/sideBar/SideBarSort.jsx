@@ -1,7 +1,13 @@
 import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material';
 import React from 'react';
+import { useProducts } from '../../context/CrudContextProvider';
 
 const SideBarSort = ({state}) => {
+
+
+  const { fetchByParams } = useProducts();
+
+
  if(state==='price'){
    return(<FormControl >
 
@@ -10,33 +16,28 @@ const SideBarSort = ({state}) => {
       aria-labelledby="demo-radio-buttons-group-label"
       defaultValue="all"
       name="radio-buttons-group"
-      
+      onChange={(e) => fetchByParams(state, e.target.value)}
     >
-      <FormControlLabel
-       value="all"
-        control={<Radio color="error" />}
-         label="all"   />
+
+<FormControlLabel
+     value="all"
+      control={<Radio color="error" />}
+       label="All"   />
 
       <FormControlLabel
-        value="200"
+        value="desc"
         control={<Radio color="error" />}
-        label="less than 200$"
+        label="from largest to smallest"
        
       />
 
       <FormControlLabel
-        value="500"
+        value="asc"
         control={<Radio color="error" />}
-        label="less than 500$"
+        label="from smallest to largest"
         
       />
 
-      <FormControlLabel
-        value="1000"
-        control={<Radio color="error" />}
-        label="less than 1000$"
-        
-      />
     </RadioGroup>
   </FormControl> )
  }else if(state==='category'){
@@ -47,7 +48,7 @@ const SideBarSort = ({state}) => {
         aria-labelledby="demo-radio-buttons-group-label"
         defaultValue="all"
         name="radio-buttons-group"
-        
+        onChange={(e) => fetchByParams(state, e.target.value)}
       >
         <FormControlLabel
          value="all"
@@ -62,14 +63,14 @@ const SideBarSort = ({state}) => {
         />
 
         <FormControlLabel
-          value="white"
+          value="Chairs"
           control={<Radio color="error" />}
-          label="Tables"
+          label="Chairs"
           
         />
 
         <FormControlLabel
-          value="rose"
+          value="Tables"
           control={<Radio color="error" />}
           label="Tables"
           
@@ -85,7 +86,7 @@ const SideBarSort = ({state}) => {
     aria-labelledby="demo-radio-buttons-group-label"
     defaultValue="all"
     name="radio-buttons-group"
-    
+    onChange={(e) => fetchByParams(state, e.target.value)}
   >
     <FormControlLabel
      value="all"
@@ -116,44 +117,41 @@ const SideBarSort = ({state}) => {
 </FormControl>
    )
  } else{
-   return(
-  <FormControl >
 
-  <FormLabel id="demo-radio-buttons-group-label">Price</FormLabel>
-  <RadioGroup
-    aria-labelledby="demo-radio-buttons-group-label"
-    defaultValue="all"
-    name="radio-buttons-group"
-    
-  >
-    <FormControlLabel
-     value="all"
-      control={<Radio color="error" />}
-       label="all"   />
+  return(
+  <></>
+  // <FormControl >
 
-    <FormControlLabel
-      value="200"
-      control={<Radio color="error" />}
-      label="less than 200$"
-     
-    />
+  //   <FormLabel id="demo-radio-buttons-group-label">Price</FormLabel>
+  //   <RadioGroup
+  //     aria-labelledby="demo-radio-buttons-group-label"
+  //     defaultValue="all"
+  //     name="radio-buttons-group"
+  //     onChange={(e) => fetchByParams('price', e.target.value)}
+  //   >
+  //     <FormControlLabel
+  //      value="all"
+  //       control={<Radio color="error" />}
+  //        label="all"   />
 
-    <FormControlLabel
-      value="500"
-      control={<Radio color="error" />}
-      label="less than 500$"
-      
-    />
+  //     <FormControlLabel
+  //       value="desc"
+  //       control={<Radio color="error" />}
+  //       label="from largest to smallest"
+       
+  //     />
 
-    <FormControlLabel
-      value="1000"
-      control={<Radio color="error" />}
-      label="less than 1000$"
-      
-    />
-  </RadioGroup>
-</FormControl>
+  //     <FormControlLabel
+  //       value="asc"
+  //       control={<Radio color="error" />}
+  //       label="from smallest to largest"
+        
+  //     />
+
+  //   </RadioGroup>
+  // </FormControl>
    )
+
  }
 };
 

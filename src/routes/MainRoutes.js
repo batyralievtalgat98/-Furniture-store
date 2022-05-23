@@ -7,6 +7,7 @@ import AboutPage from '../pages/AboutPage';
 import AdminPage from '../pages/AdminPage';
 import EditProductPage from '../pages/EditProductPage';
 import HomePage from '../pages/HomePage';
+import NotFoundPage from '../pages/NotFoundPage';
 import ProductPage from '../pages/ProductPage';
 
 const MainRoutes = () => {
@@ -47,6 +48,11 @@ const MainRoutes = () => {
       link: '/register',
        element: <Register />,
        id: 7,
+     },
+     {
+      link: '/*',
+       element: <NotFoundPage />,
+       id: 8,
      }
   ]
   return (

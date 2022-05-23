@@ -6,8 +6,8 @@ import SideBar from '../components/sideBar/SideBar';
 const ProductPage = () => {
   return (
     <>
-    <Grid container>
-<Grid item xs={2} >
+    <Grid container sx={{flexWrap: 'wrap'}}>
+<Grid item xs={9} sm={4} md={2} >
   <SideBar />
   </Grid >
   <Grid item xs={10} >

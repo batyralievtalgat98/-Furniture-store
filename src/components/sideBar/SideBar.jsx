@@ -8,6 +8,7 @@ import { Box } from '@mui/system';
 import SideBarSort from './SideBarSort';
 
 import SearchIcon from '@mui/icons-material/Search';
+import { useProducts } from '../../context/CrudContextProvider';
 
 
 const SideBar = () => {
@@ -18,6 +19,11 @@ const SideBar = () => {
   const handleChange = (event) => {
     setState(event.target.value);
   }
+
+  const { searchFilter } = useProducts();
+
+
+
   return (
     <>
         <Box sx={{display: 'flex', flexDirection: 'column'}}>
@@ -26,12 +32,13 @@ const SideBar = () => {
         id="input-with-icon-textfield"
         label="Search..."
         // value={search}
-        // onChange={(e) => setSearch(e.target.value)}
+        
+        onChange={(e) => searchFilter(e.target.value)}
         InputProps={{
           startAdornment: (
-            <InputAdornment
+            <InputAdornment position="start"
             sx={{cursor: 'pointer'}}
-            onClick={()=>console.log('help')} position="start">
+            >
               <SearchIcon  />
             </InputAdornment>
           ),
@@ -55,7 +62,7 @@ const SideBar = () => {
      
 
     
-    <SideBarSort state={state}/>
+    <SideBarSort state={state} />
 
 
     </Box>

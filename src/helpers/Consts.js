@@ -1,1 +1,2 @@
-export const API = 'http://35.192.116.215/api/v1/products/';
+export const API = 'https://furnitureshop18.herokuapp.com/api/v1/products/';
+export const API2 = 'https://furnitureshop18.herokuapp.com/api/v1/';
