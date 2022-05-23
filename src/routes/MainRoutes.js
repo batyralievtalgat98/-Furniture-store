@@ -5,6 +5,7 @@ import Register from '../components/authorization/Register';
 
 import AboutPage from '../pages/AboutPage';
 import AdminPage from '../pages/AdminPage';
+import CardPage from '../pages/CardPage';
 import EditProductPage from '../pages/EditProductPage';
 import HomePage from '../pages/HomePage';
 import NotFoundPage from '../pages/NotFoundPage';
@@ -53,6 +54,11 @@ const MainRoutes = () => {
       link: '/*',
        element: <NotFoundPage />,
        id: 8,
+     },
+     {
+      link: '/card',
+       element: <CardPage />,
+       id: 9,
      }
   ]
   return (
