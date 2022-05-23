@@ -5,81 +5,78 @@ import { useProducts } from '../../context/CrudContextProvider';
 
 const AddProduct = () => {
 
-  const{ addProduct }=useProducts()
+  const { addProduct } = useProducts()
 
 
-  const navigate = useNavigate()
+  
 
-  const [product, setProduct]= useState({
+  const [product, setProduct] = useState({
     name: '',
-category: '',
-price: '',
-description: '',
-made_in: '',
+    category: '',
+    price: '',
+    description: '',
+    made_in: '',
   })
 
 
-  const handleInp = (e)=>{
-   
-      let obj = {
-        ...product,
-        [e.target.name]: e.target.value,
-      }
-      setProduct(obj)
+  const handleInp = (e) => {
 
+    let obj = {
+      ...product,
+      [e.target.name]: e.target.value,
+    }
+    setProduct(obj)
 
-
+    
+    
   }
 
-  const [age, setAge] = React.useState('');
+  const [age, setAge] = useState('');
 
   const handleChange = (event) => {
     setAge(event.target.value);
   };
 
-
   return (
     <Box sx={{ width: '60vw', margin: '10vh auto' }}>
-      <TextField
-      sx={{marginBottom: '10px', borderColor: 'black' }}
-        fullWidth
-        id="outlined-basic"
-        label="Category"
-        variant="outlined"
-        name='category'
-        size="small"
-        onChange={handleInp}
-      />
 
-{/* <FormControl fullWidth>
+
+      <FormControl fullWidth
+        size="small"
+        sx={{ marginBottom: '10px', borderColor: 'black' }}
+        
+      >
         <InputLabel id="demo-simple-select-label">Category</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          // value={age}
-          // label="Age"
           name='category'
-          onChange={handleInp}
+          value={age}
+          
+          onChange={(e)=>{ handleChange(e);handleInp(e)}
+          }
         >
-          <MenuItem value={10}>Tables</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          <MenuItem value={'Tables'}>Tables</MenuItem>
+          <MenuItem value={'Bed'}>Bed</MenuItem>
+          <MenuItem value={'Chairs'}>Chairs</MenuItem>
         </Select>
-      </FormControl> */}
-      
+      </FormControl>
+
+
+
       <TextField
-      sx={{marginBottom: '10px', borderColor: 'black' }}
+        sx={{ marginBottom: '10px', borderColor: 'black' }}
         fullWidth
         id="outlined-basic"
         label="Name"
         variant="outlined"
-        name='name' 
+        name='name'
         size="small"
         onChange={handleInp}
-        
+
       />
       <TextField
-      sx={{marginBottom: '10px', borderColor: 'black' }}
+        sx={{ marginBottom: '10px', borderColor: 'black' }}
         fullWidth
         id="outlined-basic"
         label="Price"
@@ -90,8 +87,8 @@ made_in: '',
 
       />
       <TextField
-      
-      sx={{marginBottom: '10px', borderColor: 'black',backgroundColor: 'whitesmoke' }}
+
+        sx={{ marginBottom: '10px', borderColor: 'black', backgroundColor: 'whitesmoke' }}
         fullWidth
         id="outlined-basic"
         label="Description"
@@ -99,11 +96,11 @@ made_in: '',
         name='description'
         size="small"
         onChange={handleInp}
-        
+
       />
-            <TextField
-      
-      sx={{marginBottom: '10px', borderColor: 'black',backgroundColor: 'whitesmoke' }}
+      <TextField
+
+        sx={{ marginBottom: '10px', borderColor: 'black', backgroundColor: 'whitesmoke' }}
         fullWidth
         id="outlined-basic"
         label="Made in ..."
@@ -111,7 +108,7 @@ made_in: '',
         name='made_in'
         size="small"
         onChange={handleInp}
-        
+
       />
       {/* <TextField
       
@@ -126,15 +123,15 @@ made_in: '',
         type='file'
       
       /> */}
-    
+
       <Button
-      sx={{marginBottom: '10px', borderColor: 'black', color: 'black', backgroundColor: 'whitesmoke' }}
+        sx={{ marginBottom: '10px', borderColor: 'black', color: 'black', backgroundColor: 'whitesmoke' }}
         variant="outlined"
         fullWidth
         size="large"
-    onClick={()=>addProduct(product)}
+        onClick={() => addProduct(product)}
       >
-       Add product
+        Add product
       </Button>
     </Box>
   );

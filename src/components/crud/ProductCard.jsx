@@ -18,8 +18,8 @@ export default function ProductCard({item}) {
     sx={{width: '67%'}}
       component="img"
       height="200"
-      image={item.picture}
-      alt={item.name}
+      // image={item.picture}
+      // alt={item.name}
     />
     <CardContent >
       <Typography sx={{display: 'flex', textAlign: 'center'}} gutterBottom variant="h5" component="div">

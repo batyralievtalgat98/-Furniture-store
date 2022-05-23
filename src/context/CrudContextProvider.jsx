@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext, useReducer, useState } from 'react';
 
 import axios from 'axios'
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -31,16 +31,22 @@ const CrudContextProvider = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const [page, setPage] = useState(1)
   const [state, dispatch] = useReducer(reducer, INIT_STATE)
 
+  const [count, setCount] = useState(1)
+
   const getProducts = async () => {
-
-
-    const { data } = await axios(`${API}`)
+    let loc=location.pathname
+    let url = `${loc}?page=${page}`
+    navigate(url)
+    const { data } = await axios(`${API}?page=${page}`)
+    setCount(Math.ceil(data.count / 3))
     dispatch({
       type: 'GET_PRODUCTS',
       payload: data
     })
+
   }
   const getProductDetails = async (id) => {
     const { data } = await axios(`${API}${id}`);
@@ -55,7 +61,7 @@ const CrudContextProvider = ({ children }) => {
       headers: {'Content-Type':'multipart/form-data',
     },
     };
-
+console.log(newProduct);
 
     let newProduct2 = new FormData()
     newProduct2.append('name', newProduct.name)
@@ -65,8 +71,6 @@ const CrudContextProvider = ({ children }) => {
     newProduct2.append('made_in', newProduct.made_in)
 
 
-
-    
     await axios.post(`${API}`, newProduct2,config)
     getProducts()
   }
@@ -94,6 +98,32 @@ const CrudContextProvider = ({ children }) => {
 
   }
 
+  const fetchByParams = async(query, value)=>{
+if(value==='all'){
+  getProducts()
+}else{
+    
+  const { data } = await axios(`${API}filter/?${query}=${value}`)
+
+  dispatch({
+    type: 'GET_PRODUCTS',
+    payload: data
+  })
+}
+  }
+
+  const searchFilter = async(value)=>{
+  
+    const { data } = await axios(`${API}search/?q=${value}`)
+  
+    dispatch({
+      type: 'GET_PRODUCTS',
+      payload: data
+    })
+    
+
+  }
+
   return <productContext.Provider value={{
     products: state.products,
     productDetails: state.productDetails,
@@ -102,7 +132,11 @@ const CrudContextProvider = ({ children }) => {
     deleteProduct,
     saveEditedProduct,
     getProductDetails,
-  
+    page,
+    setPage,
+    fetchByParams,
+    count,
+    searchFilter
     
   }}
   >{children}</productContext.Provider>

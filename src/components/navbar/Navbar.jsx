@@ -18,10 +18,10 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import { Link} from 'react-router-dom';
 
-import SearchIcon from '@mui/icons-material/Search';
-import { styled, alpha } from '@mui/material/styles';
-import { Badge, InputBase } from '@mui/material';
 
+import { Badge} from '@mui/material';
+
+import logo from '../Image/logo.PNG'
 
 
 const pages = [
@@ -37,13 +37,14 @@ const pages = [
 ];
 
 const settings=[
-  {name: 'Registration', link: '/register'},
-  {name: 'Authorization', link: '/login'},
+  {name: 'Registration', link: '/register',id:1},
+  {name: 'Authorization', link: '/login',id:2},
 ]
 
 // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Navbar = () => {
+  
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -62,72 +63,17 @@ const Navbar = () => {
     setAnchorElUser(null);
   };
 
-  const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
+  
 
-  }));
 
-  const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
-    right: 0,
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(1),
-      width: 'auto',
-    },
-  }));
-
-  const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'inherit',
-    '& .MuiInputBase-input': {
-      padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
-      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-      transition: theme.transitions.create('width'),
-      width: '50%',
-      [theme.breakpoints.up('sm')]: {
-        width: '10ch',
-        '&:focus': {
-          width: '20ch',
-        },
-      },
-    },
-  }));
 
   return (
     <AppBar position="static" sx={{background: '#E5E5E5', boxShadow: 'none'}}>
       <Container maxWidth="xl" >
         <Toolbar disableGutters   >
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              
-              textDecoration: 'none',
-              
-            }}
-          >
-            STORE
-          </Typography>
+          <Box sx={{maxWidth:'60px',display: { xs: 'none', md: 'flex' }}}>
+            <img src={logo} alt=""  width='100%'/>
+          </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -166,25 +112,11 @@ const Navbar = () => {
                   </MenuItem>
                 ))}
             </Menu>
+          <Box sx={{maxWidth:'50px',display: { xs: 'flex', md: 'none'}, margin: 'auto' }}>
+            <img src={logo} alt=""  width='100%'/>
           </Box>
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            STORE
-          </Typography>
+          </Box>
+        
           <Box sx={{ flexGrow: 1, display: { xs: 'none',
            md: 'flex',
           
@@ -203,15 +135,33 @@ const Navbar = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0, display: 'flex' }}>
-          <Search sx={{mr: '10px', display:{xs: 'none',sm: 'block'}}} >
+          {/* <TextField
+          sx={{mr: '10px', display:{xs: 'none',sm: 'block'}}}
+        fullWidth
+        id="input-with-icon-textfield"
+        label="Search..."
+        // value={search}
+        onChange={(e) => searchFilter(e.target.value)}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          ),
+        }}
+        variant="standard"
+      /> */}
+          {/* <Search sx={{mr: '10px', display:{xs: 'none',sm: 'block'}}} >
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
+              value={search}
+              onChange={(e) => setSearch(e.target.value)} 
+                         />
+          </Search> */}
          <FavoriteIcon 
           sx={{fontSize: '30px', mt:'5px', mr:'5px'}}
          />
@@ -250,17 +200,7 @@ const Navbar = () => {
                 </MenuItem>
                 </Link>
               ))}
-               {/* {pages.map((page) => (
-              <Link to={page.link} key={page.id}>
-                <Button
-                  onClick={handleCloseNavMenu}
-                  sx={{ ml: 'auto',my: 2, color: 'black', display: 'block'}}
-                  className='navbar-item'
-                >
-                  {page.name}
-                </Button>
-              </Link>
-            ))} */}
+              
             </Menu>
           </Box>
         </Toolbar>
