@@ -16,6 +16,7 @@ const AddProduct = () => {
     price: '',
     description: '',
     made_in: '',
+    // image:''
   })
 
 
@@ -26,8 +27,18 @@ const AddProduct = () => {
       [e.target.name]: e.target.value,
     }
     setProduct(obj)
-
     
+  }
+  const handleInpFile = (e) => {
+
+// console.log(e.target.files[0]);
+   let file= e.target.files[0]
+   console.log(file);
+   setProduct({
+     ...product, 
+     image: file
+   })
+
     
   }
 
@@ -110,19 +121,19 @@ const AddProduct = () => {
         onChange={handleInp}
 
       />
-      {/* <TextField
+      <TextField
       
       sx={{marginBottom: '10px', borderColor: 'black',backgroundColor: 'whitesmoke' }}
         fullWidth
         id="outlined-helperText"
 
         helperText="Вставьте картинку"
-        name='picture'
+        name='image'
         size="small"
-        onChange={handleInp}
+        onChange={handleInpFile}
         type='file'
       
-      /> */}
+      />
 
       <Button
         sx={{ marginBottom: '10px', borderColor: 'black', color: 'black', backgroundColor: 'whitesmoke' }}

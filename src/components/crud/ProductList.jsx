@@ -24,7 +24,7 @@ const ProductList = () => {
   useEffect(() => {
     getProducts();
 
-  }, [page, searchParams]);
+  }, [page, searchParams]); 
 
 
 

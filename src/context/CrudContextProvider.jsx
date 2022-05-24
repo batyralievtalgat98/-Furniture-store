@@ -13,6 +13,7 @@ export const useProducts = () => {
 const INIT_STATE = {
   products: [],
   productDetails: {},
+  comments:[],
 };
 
 const reducer = (state = INIT_STATE, action) => {
@@ -21,6 +22,8 @@ const reducer = (state = INIT_STATE, action) => {
       return { ...state, products: action.payload }
     case 'GET_PRODUCT_DETAILS':
       return { ...state, productDetails: action.payload }
+      case 'GET_COMMENTS':
+      return { ...state, comments: action.payload }
     default:
       return state
   }
@@ -47,6 +50,7 @@ const CrudContextProvider = ({ children }) => {
       payload: data
     })
 
+
   }
   const getProductDetails = async (id) => {
     const { data } = await axios(`${API}${id}`);
@@ -56,9 +60,16 @@ const CrudContextProvider = ({ children }) => {
     });
   };
 
+
   const addProduct = async (newProduct) => {
+
+    let token = JSON.parse(localStorage.getItem('token'));
+    const Authorization = `Bearer ${token.access}`;
+
     const config ={
       headers: {'Content-Type':'multipart/form-data',
+      Authorization: `Bearer ${token.access}`,
+
     },
     };
 console.log(newProduct);
@@ -69,6 +80,8 @@ console.log(newProduct);
     newProduct2.append('price', newProduct.price)
     newProduct2.append('description', newProduct.description)
     newProduct2.append('made_in', newProduct.made_in)
+    newProduct2.append('image', newProduct.image)
+
 
 
     await axios.post(`${API}`, newProduct2,config)
@@ -76,13 +89,28 @@ console.log(newProduct);
   }
 
   const deleteProduct = async (id) => {
-    await axios.delete(`${API}${id}`);
+    let token = JSON.parse(localStorage.getItem('token'));
+    const Authorization = `Bearer ${token.access}`;
+
+    const config ={
+      headers: {'Content-Type':'multipart/form-data',
+      Authorization: `Bearer ${token.access}`,
+
+    },
+    };
+    await axios.delete(`${API}${id}`,config);
     getProducts();
   };
 
   const saveEditedProduct = async (newProduct) => {
+    let token = JSON.parse(localStorage.getItem('token'));
+    const Authorization = `Bearer ${token.access}`;
+
     const config ={
-      headers: {'Content-Type': 'multipart/form-data'},
+      headers: {'Content-Type':'multipart/form-data',
+      Authorization: `Bearer ${token.access}`,
+
+    },
     };
     let newProduct2 = new FormData()
     newProduct2.append('name', newProduct.name)
@@ -91,9 +119,14 @@ console.log(newProduct);
     newProduct2.append('description', newProduct.description)
     newProduct2.append('made_in', newProduct.made_in)
     newProduct2.append('id', newProduct.id)
+    if(  typeof newProduct.image !== 'string') {
+      newProduct2.append('image', newProduct.image)
+                        
+    }
+
     let id = newProduct2.get('id')
-    console.log(id);
-    await axios.patch(`${API}${id}/`, newProduct,config);
+ 
+    await axios.patch(`${API}${id}/`, newProduct2,config);
     getProducts()
 
   }
@@ -124,9 +157,44 @@ if(value==='all'){
 
   }
 
+  const toogleLike = async(like)=>{
+
+     let token = JSON.parse(localStorage.getItem('token'));
+     const Authorization = `Bearer ${token.access}`;
+ 
+     const config ={
+       headers: {'Content-Type':'multipart/form-data',
+       Authorization: `Bearer ${token.access}`,
+ 
+     },
+     };
+
+     await axios(`${API}${like}/toggle_like/`,config)
+     getProducts()
+  }
+  const getComments = async(id)=>{
+    let token = JSON.parse(localStorage.getItem('token'));
+    const Authorization = `Bearer ${token.access}`;
+
+    const config ={
+      headers: {'Content-Type':'multipart/form-data',
+      Authorization: `Bearer ${token.access}`,
+
+    },
+    };
+    let {data}=await axios(`${API}${id}`)
+
+    dispatch({
+      type: 'GET_COMMENTS',
+      payload: data
+    })
+
+  }
+
   return <productContext.Provider value={{
     products: state.products,
     productDetails: state.productDetails,
+    comments: state.comments,
     addProduct,
     getProducts,
     deleteProduct,
@@ -136,7 +204,9 @@ if(value==='all'){
     setPage,
     fetchByParams,
     count,
-    searchFilter
+    searchFilter,
+    toogleLike,
+    getComments
     
   }}
   >{children}</productContext.Provider>
