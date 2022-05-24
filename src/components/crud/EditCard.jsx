@@ -22,12 +22,27 @@ const EditCard = () => {
   }, []);
 
   const handleInp = (e) => {
+
     let obj = {
       ...product,
       [e.target.name]: e.target.value,
-    };
-    setProduct(obj);
-  };
+    }
+    setProduct(obj)
+    
+  }
+  const handleInpFile = (e) => {
+
+// console.log(e.target.files[0]);
+
+   let file= e.target.files[0]
+   console.log(file);
+   setProduct({
+     ...product, 
+     image: file
+   })
+
+    
+  }
   return (
     <Box sx={{ width: '60vw', margin: '10vh auto' }}>
     <TextField
@@ -92,19 +107,20 @@ const EditCard = () => {
       onChange={handleInp}
       
     />
-    {/* <TextField
+    <TextField
     
     sx={{marginBottom: '10px', borderColor: 'black',backgroundColor: 'whitesmoke' }}
       fullWidth
       id="outlined-helperText"
 
       helperText="Вставьте картинку"
-      name='picture'
+      name='image'
       size="small"
-      onChange={handleInp}
+      onChange={handleInpFile}
+      // value={e.target.files[0] || product.image}
       type='file'
-      defaultValue="Default Value"
-    /> */}
+      // defaultValue="Default Value"
+    />
   
     <Button
     sx={{marginBottom: '10px', borderColor: 'black', color: 'black', backgroundColor: 'whitesmoke' }}

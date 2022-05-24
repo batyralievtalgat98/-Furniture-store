@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Route, useNavigate } from 'react-router-dom';
 import {API2} from '../helpers/Consts';
 export const authContext = createContext();
@@ -15,6 +15,8 @@ const AuthContextProvider = ({ children }) => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+
+  
   const register = async (user) => {
     const config = {
       headers: { 'Content-Type': 'multipart/form-data' },
@@ -25,17 +27,44 @@ const AuthContextProvider = ({ children }) => {
 
     try {
       const res = await axios.post(`${API2}account/register/`, formData, config);
-      navigate('/login');
+      // navigate('/login');
+
     } catch (e) {
       console.log(e);
       setError('error occured');
     }
   };
 
+
+  async function activationCode(value) {
+    const config = {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    };
+    let formData = new FormData();
+    console.log(value);
+    formData.append('activation_code', value);
+   
+    try {
+      await axios.post(`${API2}account/activation/`, formData,config)
+      navigate('/login')
+    } catch (error) {
+      
+    }
+
+  }
+
+  useEffect(() => {
+    setUserName(localStorage.getItem('username'))
+  }, [])
+  
+
+  const [userName, setUserName] = useState('')
+
   async function login(username, password) {
     console.log(username, password);
     const config = {
       headers: { 'Content-Type': 'multipart/form-data' },
+
     };
     let formData = new FormData();
     formData.append('email', username);
@@ -43,19 +72,27 @@ const AuthContextProvider = ({ children }) => {
 
     try {
       let res = await axios.post(`${API2}account/login/`, formData, config);
+      console.log(res);
       localStorage.setItem('token', JSON.stringify(res.data));
       localStorage.setItem('username', username);
       setUser(username);
+
+      navigate('/')
+      
+      setUserName(localStorage.getItem('username'));
+
     } catch (error) {
       setError('error occured');
     }
   }
 
+
+
   async function checkAuth() {
     let token = JSON.parse(localStorage.getItem('token'));
     try {
       const Authorization = `Bearer ${token.access}`;
-
+       
       let res = await axios.post(
         `${API2}account/refresh/`,
         {
@@ -84,7 +121,7 @@ const AuthContextProvider = ({ children }) => {
   function logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
-    setUser('');
+    setUserName('');
   }
 
   return (
@@ -96,6 +133,8 @@ const AuthContextProvider = ({ children }) => {
         error,
         checkAuth,
         logout,
+        activationCode,
+        userName
       }}
     >
       {children}

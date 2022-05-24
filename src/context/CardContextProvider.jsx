@@ -1,198 +1,180 @@
-import React, { useEffect, useReducer, useState } from "react";
-import axios from "axios";
-import { API } from "../helpers/Consts";
+import React, { createContext, useContext, useReducer, useState } from 'react';
+import { CART } from '../helpers/Consts';
 
-export const ClientContext = React.createContext();
+const cartContext = createContext();
 
-const INIT_STATE = {
-  products: null,
-  cartCount: JSON.parse(localStorage.getItem("cart"))
-    ? JSON.parse(localStorage.getItem("cart")).products.length
-    : 0,
-  cart: null,
-  detail: null,
+export const useCart = () => {
+  return useContext(cartContext);
 };
 
-const reducer = (state, action) => {
+ function getCountProductsInCart() {
+  const cart = JSON.parse(localStorage.getItem('cart'));
+  return cart ? cart.products.length : 0;
+}
+
+ const calcSubPrice = (product) => +product.count * product.item.price;
+
+ const calcTotalPrice = (products) => {
+return products.reduce((ac, cur) => {
+  return (ac += cur.subPrice);
+}, 0);
+};
+
+const INIT_STATE = {
+  cart: JSON.parse(localStorage.getItem('cart')),
+  cartLength: getCountProductsInCart(),
+};
+
+function reducer(state = INIT_STATE, action) {
   switch (action.type) {
-    case "GET_PRODUCTS":
-      return { ...state, products: action.payload };
-    case "ADD_PRODUCT_TO_CART":
-      return { ...state, cartCount: action.payload };
-    case "DELETE_PRODUCT_FROM_CART":
-      return { ...state, cartCount: action.payload };
-    case "GET_CART":
+    case CART.GET_CART:
       return { ...state, cart: action.payload };
-    case "GET_DETAIL":
-      return { ...state, detail: action.payload };
+    case CART.GET_CART_LENGTH:
+      return { ...state, cartLength: action.payload };
     default:
       return state;
   }
-};
+}
 
-const ClientProvider = (props) => {
+function checkProductInCart(id) {
+  let cart = JSON.parse(localStorage.getItem('cart'));
+  if (cart) {
+    let newCart = cart.products.filter((elem) => elem.item.id == id);
+    return newCart.length > 0 ? true : false;
+  } else {
+    cart = {
+      product: [],
+      totalPrice: 0,
+    };
+  }
+}
+
+const CartContextProvider = ({ children }) => {
+
+
+ 
   const [state, dispatch] = useReducer(reducer, INIT_STATE);
 
-  const getProducts = async () => {
-    try {
-      const responce = await axios(`${API}/${window.location.search}`);
-      let action = {
-        type: "GET_PRODUCTS",
-        payload: responce.data,
+  const getCart = () => {
+    let cart = JSON.parse(localStorage.getItem('cart'));
+    if (!cart) {
+      localStorage.setItem(
+        'cart',
+        JSON.stringify({
+          products: [],
+          totalPrice: 0,
+        })
+      );
+      cart = {
+        products: [],
+        totalPrice: 0,
       };
-      dispatch(action);
-    } catch (error) {
-      console.log(error);
     }
+    dispatch({
+      type: CART.GET_CART,
+      payload: cart,
+    });
   };
-
-  // ! PAGINATION
-
-  const productsPerPage = 3;
-  const [currentPage, setCurrentPage] = useState(1);
-  const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    if (state.products) {
-      setPosts(state.products);
-    }
-  }, [state.products]);
-
-  const indexOfLastProduct = currentPage * productsPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = posts.slice(indexOfFirstProduct, indexOfLastProduct);
-  const tottalProductsCount = posts.length;
-
-  // ! CART
 
   const addProductToCart = (product) => {
-    let cart = JSON.parse(localStorage.getItem("cart"));
+    let cart = JSON.parse(localStorage.getItem('cart'));
+
     if (!cart) {
       cart = {
         products: [],
         totalPrice: 0,
       };
     }
-    let productCart = {
-      product: product,
+
+    let newProduct = {
+      item: product,
       count: 1,
-      subPrice: product.price,
+      subPrice: +product.price,
     };
-    cart.products.push(productCart);
-    cart.totalPrice = cart.products.reduce((prev, item) => {
-      return prev + item.subPrice;
-    }, 0);
-    localStorage.setItem("cart", JSON.stringify(cart));
-    let action = {
-      type: "ADD_PRODUCT_TO_CART",
-      payload: cart.products.length,
-    };
-    dispatch(action);
-  };
-  const checkProductInCart = (id) => {
-    let cart = JSON.parse(localStorage.getItem("cart"));
-    if (!cart) {
-      cart = {
-        products: [],
-      };
-    }
-    let check = cart.products.find((item) => {
-      return item.product.id === id;
-    });
-    if (!check) {
-      return false;
+
+    let productToFind = cart.products.filter(
+      (elem) => elem.item.id === product.id
+    );
+
+    if (productToFind.length == 0) {
+      cart.products.push(newProduct);
     } else {
-      return true;
+      cart.products = cart.products.filter(
+        (elem) => elem.item.id !== product.id
+      );
     }
-  };
 
-  const deleteProductFromCart = (id) => {
-    let cart = JSON.parse(localStorage.getItem("cart"));
-    cart.products = cart.products.filter((item) => {
-      return item.product.id !== id;
+    cart.totalPrice = calcTotalPrice(cart.products);
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    dispatch({
+      type: CART.GET_CART,
+      payload: cart,
     });
-    cart.totalPrice = cart.products.reduce((prev, item) => {
-      return prev + item.subPrice;
-    }, 0);
-    localStorage.setItem("cart", JSON.stringify(cart));
-    let action = {
-      type: "DELETE_PRODUCT_FROM_CART",
-      payload: cart.products.length,
-    };
-    dispatch(action);
   };
 
-  const getCart = () => {
-    let cart = JSON.parse(localStorage.getItem("cart"));
-    if (!cart) {
+  const changeProductCount = (count, id) => {
+    let cart = JSON.parse(localStorage.getItem('cart'));
+    cart.products = cart.products.map((product) => {
+      if (product.item.id === id) {
+        product.count = count;
+        product.subPrice = calcSubPrice(product);
+      }
+      return product;
+    });
+    cart.totalPrice = calcTotalPrice(cart.products);
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    dispatch({
+      type: CART.GET_CART,
+      payload: cart,
+    });
+  };
+
+  function checkProductInCart(id) {
+    let cart = JSON.parse(localStorage.getItem('cart'));
+    if (cart) {
+      let newCart = cart.products.filter((elem) => elem.item.id == id);
+      return newCart.length > 0 ? true : false;
+    } else {
       cart = {
-        products: [],
+        product: [],
         totalPrice: 0,
       };
     }
-    let action = {
-      type: "GET_CART",
-      payload: cart,
-    };
-    dispatch(action);
-  };
+  }
 
-  const changeCount = (count, id) => {
-    let cart = JSON.parse(localStorage.getItem("cart"));
-    cart.products = cart.products.map((item) => {
-      if (item.product.id === id) {
-        item.count = count;
-        item.subPrice = item.count * item.product.price;
-        return item;
-      } else {
-        return item;
-      }
-    });
-    cart.totalPrice = cart.products.reduce((prev, item) => {
-      return prev + item.subPrice;
-    }, 0);
-    localStorage.setItem("cart", JSON.stringify(cart));
+  function deleteCartProduct(id) {
+    let cart = JSON.parse(localStorage.getItem('cart'));
+    cart.products = cart.products.filter((elem) => elem.item.id !== id);
+
+    cart.totalPrice = calcTotalPrice(cart.products);
+    localStorage.setItem('cart', JSON.stringify(cart));
     getCart();
-  };
-
-  // ! Detail Page
-
-  const getDetail = async (id) => {
-    try {
-      const response = await axios(`${API}/${id}`);
-      let action = {
-        type: "GET_DETAIL",
-        payload: response.data,
-      };
-      dispatch(action);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    dispatch({
+      type: CART.GET_CART_LENGTH,
+      payload: cart,
+    });
+  }
 
   return (
-    <ClientContext.Provider
+    <cartContext.Provider
       value={{
-        getProducts,
-        setCurrentPage,
-        addProductToCart,
-        checkProductInCart,
-        deleteProductFromCart,
         getCart,
-        changeCount,
-        getDetail,
-        products: currentProducts,
-        tottalProductsCount,
-        productsPerPage,
-        currentPage,
-        cartCount: state.cartCount,
+        addProductToCart,
+        changeProductCount,
+        checkProductInCart,
+        deleteCartProduct,
         cart: state.cart,
-        detail: state.detail,
+        getCountProductsInCart
+
       }}
     >
-      {props.children}
-    </ClientContext.Provider>
+      {children}
+    </cartContext.Provider>
   );
 };
 
-export default ClientProvider;
+export default CartContextProvider;
