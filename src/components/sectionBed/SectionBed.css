@@ -1,0 +1,13 @@
+.sectionBedImg{
+  height: 100% ;
+  width: 100%;
+  z-index: -5;
+  position: absolute;
+}
+
+@media (max-width: 900px) {
+  .sectionBedImg{
+    height: 40%
+
+  }
+}

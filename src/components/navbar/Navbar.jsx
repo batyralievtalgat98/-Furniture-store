@@ -12,36 +12,69 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 
+import {ADMIN} from '../../helpers/Consts';
+
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import { Link} from 'react-router-dom';
 
-import SearchIcon from '@mui/icons-material/Search';
-import { styled, alpha } from '@mui/material/styles';
-import { Badge, InputBase } from '@mui/material';
 
+import { Badge} from '@mui/material';
+
+import logo from '../Image/logo.PNG'
+import { useAuth } from '../../context/AuthContextProvider';
+import { useCart } from '../../context/CardContextProvider';
+
+ 
 
 
 const pages = [
   { name: 'HOME', link: '/', id: 1 },
 
   { name: 'STORE', link: '/store', id: 2 },
-  { name: 'ACCESSORIES', link: '/', id: 3 },
+ 
   { name: 'BRAND', link: '/', id: 4 },
   { name: 'ABOUT US', link: '/about', id: 5 },
   { name: 'CONTACT US', link: '/', id: 6 },
-  { name: 'ADMIN PAGE', link: '/adminPage', id: 7 },
+  // { name: 'ADMIN PAGE', link: '/adminPage', id: 7 },
   
 ];
 
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+
+
+// const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Navbar = () => {
+  
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const { userName,logout } = useAuth();
+
+ let settings=[
+    {name: 'Registration', link: '/register',id:1},
+    {name: 'Authorization', link: '/login',id:2},
+  ]
+  if(userName){
+    
+       settings= [
+      {name: 'Logout', link: '/',id:1},  
+    ]
+  
+  } 
+
+  const {addProductToCart,getCountProductsInCart} = useCart()
+  const [count, setCount] = React.useState(0)
+
+  React.useEffect (()=> {
+    setCount(getCountProductsInCart)
+  },[addProductToCart])
+
+
+  
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -58,72 +91,17 @@ const Navbar = () => {
     setAnchorElUser(null);
   };
 
-  const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
+  
 
-  }));
 
-  const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
-    right: 0,
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(1),
-      width: 'auto',
-    },
-  }));
-
-  const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'inherit',
-    '& .MuiInputBase-input': {
-      padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
-      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-      transition: theme.transitions.create('width'),
-      width: '50%',
-      [theme.breakpoints.up('sm')]: {
-        width: '10ch',
-        '&:focus': {
-          width: '20ch',
-        },
-      },
-    },
-  }));
 
   return (
     <AppBar position="static" sx={{background: '#E5E5E5', boxShadow: 'none'}}>
       <Container maxWidth="xl" >
         <Toolbar disableGutters   >
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              
-              textDecoration: 'none',
-              
-            }}
-          >
-            STORE
-          </Typography>
+          <Box sx={{maxWidth:'60px',display: { xs: 'none', md: 'flex' }}}>
+            <img src={logo} alt=""  width='100%'/>
+          </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -161,26 +139,22 @@ const Navbar = () => {
                     </Link>
                   </MenuItem>
                 ))}
+                {userName===ADMIN ? (
+              <Link to={'/adminPage'}>
+                <Button  
+                 sx={{ ml: 'auto',my: 2, color: 'black', display: 'block'}}
+                 className='navbar-item'
+                >
+                 ADMIN PANEL
+                </Button>
+              </Link>
+            ):('')}
             </Menu>
+          <Box sx={{maxWidth:'50px',display: { xs: 'flex', md: 'none'}, margin: 'auto' }}>
+            <img src={logo} alt=""  width='100%'/>
           </Box>
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            STORE
-          </Typography>
+          </Box>
+        
           <Box sx={{ flexGrow: 1, display: { xs: 'none',
            md: 'flex',
           
@@ -195,29 +169,60 @@ const Navbar = () => {
                   {page.name}
                 </Button>
               </Link>
-            ))}
+            ))} 
+
+            {userName===ADMIN ? (
+              <Link to={'/adminPage'}>
+                <Button  
+                 sx={{ ml: 'auto',my: 2, color: 'black', display: 'block'}}
+                 className='navbar-item'
+                >
+                 ADMIN PANEL
+                </Button>
+              </Link>
+            ):('')}
           </Box>
 
           <Box sx={{ flexGrow: 0, display: 'flex' }}>
-          <Search sx={{mr: '10px', display:{xs: 'none',sm: 'block'}}} >
+          {/* <TextField
+          sx={{mr: '10px', display:{xs: 'none',sm: 'block'}}}
+        fullWidth
+        id="input-with-icon-textfield"
+        label="Search..."
+        // value={search}
+        onChange={(e) => searchFilter(e.target.value)}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          ),
+        }}
+        variant="standard"
+      /> */}
+          {/* <Search sx={{mr: '10px', display:{xs: 'none',sm: 'block'}}} >
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
+              value={search}
+              onChange={(e) => setSearch(e.target.value)} 
+                         />
+          </Search> */}
          <FavoriteIcon 
           sx={{fontSize: '30px', mt:'5px', mr:'5px'}}
          />
-          <Badge badgeContent={4} color="primary" sx={{mr:'10px',mt:'5px'}}>
+         <Link to='/card'>
+          <Badge badgeContent={count} color="error" sx={{mr:'10px',mt:'5px'}}>
 
           <ShoppingCartIcon 
+          color='error'
           sx={{fontSize: '30px', }}
          />
           </Badge>
-
+          </Link>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
@@ -239,11 +244,20 @@ const Navbar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
+             
               {settings.map((setting) => (
+                <Link to={setting.link} key={setting.id}>
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  {setting.name==='Logout' ? (
+                    <Typography onClick={logout} textAlign="center">{setting.name}</Typography>
+                  ):(
+                    <Typography textAlign="center">{setting.name}</Typography>
+                    )}
+                  
                 </MenuItem>
+                </Link>
               ))}
+              
             </Menu>
           </Box>
         </Toolbar>

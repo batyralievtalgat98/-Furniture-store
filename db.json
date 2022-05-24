@@ -1,31 +1,60 @@
 {
   "products": [
     {
-      "category": "adsfddddddddddddd",
-      "name": "asdfsssssssss",
-      "price": "sadf",
-      "description": "asdfssssssssssssss",
-      "made_in": "asdf",
-      "image": "",
+      "name": "asdfghj",
+      "category": "asdfghjk",
+      "price": "852",
+      "description": "asdfg",
+      "made_in": "asdfgh",
       "id": 1
     },
     {
-      "category": "sdg",
-      "name": "dsfg",
-      "price": "sdfg",
-      "description": "dsfg",
-      "made_in": "dsf",
-      "image": "",
+      "name": "asdfghj",
+      "category": "asdfghjk",
+      "price": "852",
+      "description": "asdfg",
+      "made_in": "asdfgh",
       "id": 2
     },
     {
-      "category": "g",
-      "name": "sd",
-      "price": "gdsgfdfdfffddfdfdf",
-      "description": "gsdf",
-      "made_in": "sdf",
-      "picture": "C:\\fakepath\\Аннотация 2022-05-11 230312.png",
+      "name": "asdfghj",
+      "category": "asdfghjk",
+      "price": "852",
+      "description": "asdfg",
+      "made_in": "asdfgh",
       "id": 3
+    },
+    {
+      "name": "asdfghj",
+      "category": "asdfghjk",
+      "price": "852",
+      "description": "asdfg",
+      "made_in": "asdfgh",
+      "id": 4
+    },
+    {
+      "name": "asdfghj",
+      "category": "asdfghjk",
+      "price": "852",
+      "description": "asdfg",
+      "made_in": "asdfgh",
+      "id": 5
+    },
+    {
+      "name": "asdfghj",
+      "category": "asdfghjk",
+      "price": "852",
+      "description": "asdfg",
+      "made_in": "asdfgh",
+      "id": 6
+    },
+    {
+      "name": "asdfghj",
+      "category": "asdfghjk",
+      "price": "852",
+      "description": "asdfg",
+      "made_in": "asdfgh",
+      "id": 7
     }
   ]
 }
