@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 import Cards from "react-credit-cards";
 import "react-credit-cards/es/styles-compiled.css";
 import { Link } from "react-router-dom";
@@ -38,7 +38,7 @@ const CreditCard = () => {
         <div className="row">
           <div className="col-sm-11">
             <label for="name">Card Number</label>
-            <input
+            <input 
               type="tel"
               className="form-control"
               value={number}

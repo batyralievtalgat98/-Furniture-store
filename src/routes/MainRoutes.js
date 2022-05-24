@@ -15,6 +15,7 @@ import ProductPage from '../pages/ProductPage';
 
 import {ADMIN} from '../helpers/Consts'
 import ProductDetailsPage from '../pages/ProductDetailsPage';
+import CreditCard from '../components/CreditCard/CreditCard';
 const MainRoutes = () => {
 
   const { userName } = useAuth();
@@ -72,6 +73,11 @@ const MainRoutes = () => {
       link: '/product/:id',
        element: <ProductDetailsPage />,
        id: 10,
+     },
+     {
+      link: '/payment',
+       element: <CreditCard />,
+       id: 11,
      }
   ]
 
