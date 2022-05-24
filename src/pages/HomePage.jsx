@@ -1,11 +1,13 @@
 import React from 'react';
-
+import CreditCard from '../components/CreditCard/CreditCard';
 const HomePage = () => {
   return (
-    <div>
-      
-    </div>
+    <>
+      <CreditCard />
+      </>
   );
 };
 
 export default HomePage;
+
+
