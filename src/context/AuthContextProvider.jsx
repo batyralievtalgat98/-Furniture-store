@@ -52,6 +52,44 @@ const AuthContextProvider = ({ children }) => {
     }
 
   }
+  async function forgotPassCode(value) {
+    const config = {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    };
+    let formData = new FormData();
+    console.log(value);
+    formData.append('email', value);
+   console.log(value);
+   navigate('/recovery')
+    try {
+      await axios.post(`${API2}account/activation/`, formData,config)
+    } catch (error) {
+      
+    }
+
+  }
+
+
+  async function newPassword(activationCode, password) {
+    const config = {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    };
+    let formData = new FormData();
+    console.log(activationCode, password);
+    formData.append('password', password);
+    formData.append('activation_code', activationCode);
+
+    try {
+      await axios.post(`${API2}account/activation/`, formData,config)
+    } catch (error) {
+      
+    }
+
+  }
+
+
+
+
 
   useEffect(() => {
     setUserName(localStorage.getItem('username'))
@@ -112,13 +150,24 @@ const AuthContextProvider = ({ children }) => {
       );
 
       let userName = localStorage.getItem('username');
-      setUser(userName);
+      setUserName(userName);
     } catch (error) {
-      logout();
+      // logout();
     }
   }
 
-  function logout() {
+   async function logout() {
+     let token = JSON.parse(localStorage.getItem('token'));
+     const config ={
+       headers: {'Content-Type':'multipart/form-data',
+       Authorization: `Bearer ${token.access}`,
+       
+      },
+    };
+    
+    let form = new FormData()
+    form.append('refresh', token.refresh)
+    await axios.post(`${API2}account/logout/`, form, config)
     localStorage.removeItem('token');
     localStorage.removeItem('username');
     setUserName('');
@@ -134,6 +183,9 @@ const AuthContextProvider = ({ children }) => {
         checkAuth,
         logout,
         activationCode,
+        userName,
+        forgotPassCode,
+        newPassword,
         userName
       }}
     >

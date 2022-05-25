@@ -3,7 +3,7 @@ import React, { createContext, useContext, useReducer, useState } from 'react';
 import axios from 'axios'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { API} from '../helpers/Consts'
-
+import { API2} from '../helpers/Consts'
 export const productContext = createContext();
 
 export const useProducts = () => {
@@ -44,7 +44,7 @@ const CrudContextProvider = ({ children }) => {
     let url = `${loc}?page=${page}`
     navigate(url)
     const { data } = await axios(`${API}?page=${page}`)
-    setCount(Math.ceil(data.count / 3))
+    setCount(Math.ceil(data.count / 6))
     dispatch({
       type: 'GET_PRODUCTS',
       payload: data
@@ -64,7 +64,6 @@ const CrudContextProvider = ({ children }) => {
   const addProduct = async (newProduct) => {
 
     let token = JSON.parse(localStorage.getItem('token'));
-    const Authorization = `Bearer ${token.access}`;
 
     const config ={
       headers: {'Content-Type':'multipart/form-data',
@@ -121,7 +120,7 @@ console.log(newProduct);
     newProduct2.append('id', newProduct.id)
     if(  typeof newProduct.image !== 'string') {
       newProduct2.append('image', newProduct.image)
-                        
+
     }
 
     let id = newProduct2.get('id')
@@ -174,11 +173,11 @@ if(value==='all'){
   }
   const getComments = async(id)=>{
     let token = JSON.parse(localStorage.getItem('token'));
-    const Authorization = `Bearer ${token.access}`;
+    
 
     const config ={
       headers: {'Content-Type':'multipart/form-data',
-      Authorization: `Bearer ${token.access}`,
+      // Authorization: `Bearer ${token.access}`,
 
     },
     };
@@ -188,6 +187,26 @@ if(value==='all'){
       type: 'GET_COMMENTS',
       payload: data
     })
+
+  }
+
+  const addComment = async(comm)=>{
+    let token = JSON.parse(localStorage.getItem('token'));
+
+ console.log(comm);
+    const config ={
+      headers: {'Content-Type':'multipart/form-data',
+      Authorization: `Bearer ${token.access}`,
+
+    },
+    };
+ let newComm = new FormData()
+
+ newComm.append('product', comm.product)
+ newComm.append('text', comm.text)
+
+
+    await axios.post(`${API2}comments/`,newComm,config)
 
   }
 
@@ -206,7 +225,8 @@ if(value==='all'){
     count,
     searchFilter,
     toogleLike,
-    getComments
+    getComments,
+    addComment
     
   }}
   >{children}</productContext.Provider>

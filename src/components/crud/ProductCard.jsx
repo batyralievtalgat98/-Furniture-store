@@ -44,7 +44,11 @@ export default function ProductCard({item}) {
       <Typography variant="body2" 
       sx={{color: 'black', fontWeight: 'bold'}}>
        {item.price} $
+       <IconButton onClick={() => navigate(`/product/${item.id}`)}>
+          <MoreHoriz/>
+          </IconButton>
       </Typography>
+      
     </CardContent>
     <CardActions>
 {userName===ADMIN ? (
@@ -58,11 +62,9 @@ export default function ProductCard({item}) {
 />
 </IconButton></Box>)}
    
-   <IconButton onClick={() => navigate(`/product/${item.id}`)}>
-          <MoreHoriz/>
-          </IconButton>
+   
 
-          <ThumbUpAltIcon onClick={()=>toogleLike(item.id)}/>{item.likes}
+          <ThumbUpAltIcon sx={{cursor: 'pointer'}} onClick={()=>toogleLike(item.id)}/>{item.likes}
      
     </CardActions>
   </Card>

@@ -16,6 +16,8 @@ import ProductPage from '../pages/ProductPage';
 import {ADMIN} from '../helpers/Consts'
 import ProductDetailsPage from '../pages/ProductDetailsPage';
 import CreditCard from '../components/CreditCard/CreditCard';
+import PasswordRecovery from '../components/authorization/PasswordRecovery';
+import ContactUsPage from '../pages/ContactUsPage';
 const MainRoutes = () => {
 
   const { userName } = useAuth();
@@ -78,8 +80,20 @@ const MainRoutes = () => {
       link: '/payment',
        element: <CreditCard />,
        id: 11,
+     },
+     {
+      link: '/recovery',
+       element: <PasswordRecovery />,
+       id: 12,
+     },
+     {
+      link: '/contact_us',
+       element: <ContactUsPage />,
+       id: 13,
      }
   ]
+
+
 
   const PRIVATE_ROUTES = [
      {

@@ -37,7 +37,7 @@ const pages = [
  
   { name: 'BRAND', link: '/', id: 4 },
   { name: 'ABOUT US', link: '/about', id: 5 },
-  { name: 'CONTACT US', link: '/', id: 6 },
+  { name: 'CONTACT US', link: '/contact_us', id: 6 },
   // { name: 'ADMIN PAGE', link: '/adminPage', id: 7 },
   
 ];
@@ -52,7 +52,13 @@ const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const { userName,logout } = useAuth();
+  const { userName,logout,checkAuth } = useAuth();
+  
+  React.useEffect(() => {
+    if (localStorage.getItem('token')) {
+      checkAuth();
+    }
+  }, []);
 
  let settings=[
     {name: 'Registration', link: '/register',id:1},

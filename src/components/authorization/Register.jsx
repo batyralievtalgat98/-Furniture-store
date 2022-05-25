@@ -14,6 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useAuth } from '../../context/AuthContextProvider';
 import { Modal } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 
 function Copyright(props) {
@@ -48,7 +49,7 @@ export default function Register() {
 
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const { register, error,activationCode } = useAuth();
+  const { register, error,activationCode,forgotPassCode } = useAuth();
 
 
   const [activeCode, setActiveCode] = React.useState('')
@@ -56,6 +57,14 @@ export default function Register() {
 function activeCodeFunc(e) {
   setActiveCode(e.target.value)
 }
+
+const [forgotPass, setForgotPass] = React.useState('')
+
+function forgotPassFunc(e) {
+  setForgotPass(e.target.value)
+}
+
+
 
   function handleRegister(email, password) {
     register({ email, password });
@@ -78,6 +87,13 @@ function activeCodeFunc(e) {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
+    const [open2, setOpen2] = React.useState(false);
+    const handleOpen2 = () => setOpen2(true);
+    const handleClose2 = () => setOpen2(false);
+
+
+
+    const navigate= useNavigate()
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -158,10 +174,29 @@ function activeCodeFunc(e) {
           <Button onClick={()=>activationCode(activeCode)}>Send</Button>
         </Box>
       </Modal>
+      <Modal
+        open={open2}
+        onClose={handleClose2}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+          Enter your email
+          </Typography>
+          <TextField
+          onChange={(e)=>forgotPassFunc(e)}
+          />
+
+          <Button onClick={()=>{forgotPassCode(forgotPass)}} >Send</Button>
+        </Box>
+      </Modal>
     </div>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link href="#" variant="body2"  
+                onClick={()=>handleOpen2()}
+                >
                   Forgot password?
                 </Link>
               </Grid>
