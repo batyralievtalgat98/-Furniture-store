@@ -18,6 +18,7 @@ import ProductDetailsPage from '../pages/ProductDetailsPage';
 import CreditCard from '../components/CreditCard/CreditCard';
 import PasswordRecovery from '../components/authorization/PasswordRecovery';
 import ContactUsPage from '../pages/ContactUsPage';
+import FavoritesPage from '../pages/FavoritesPage';
 const MainRoutes = () => {
 
   const { userName } = useAuth();
@@ -90,11 +91,16 @@ const MainRoutes = () => {
       link: '/contact_us',
        element: <ContactUsPage />,
        id: 13,
+     },
+     {
+      link: '/favorites',
+       element: <FavoritesPage/>,
+       id: 14,
      }
   ]
 
 
-
+ 
   const PRIVATE_ROUTES = [
      {
       link: '/adminPage',

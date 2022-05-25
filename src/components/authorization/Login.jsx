@@ -13,6 +13,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useAuth } from '../../context/AuthContextProvider';
+import { Modal } from '@mui/material';
+import { NavLink } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -37,11 +39,33 @@ const theme = createTheme();
 const Login = () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const { login, error } = useAuth();
+  const { login, forgotPassCode } = useAuth();
 
   function handleLogin(email, password) {
     login(email, password);
   }
+
+  const [open2, setOpen2] = React.useState(false);
+  const handleOpen2 = () => setOpen2(true);
+  const handleClose2 = () => setOpen2(false);
+
+  const [forgotPass, setForgotPass] = React.useState('')
+
+function forgotPassFunc(e) {
+  setForgotPass(e.target.value)
+}
+
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
 
   return (
     <div>
@@ -105,14 +129,32 @@ const Login = () => {
             >
               Login
             </Button>
+            <Modal
+        open={open2}
+        onClose={handleClose2}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+          Enter your email
+          </Typography>
+          <TextField
+          onChange={(e)=>forgotPassFunc(e)}
+          />
+
+          <Button onClick={()=>{forgotPassCode(forgotPass)}} >Send</Button>
+        </Box>
+      </Modal>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link href="#" variant="body2"
+                onClick={()=>handleOpen2()}>
                   Forgot password?
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/register" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

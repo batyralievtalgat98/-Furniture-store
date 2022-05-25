@@ -26,9 +26,9 @@ export default function ProductCard({item}) {
   const { addProductToCart, checkProductInCart } = useCart()
 
   return (
-    <Card sx={{  minHeight:350, minWidth: 350, my: 5, maxWidth:450}}>
+    <Card sx={{  height:400, width: 320, my: 5,}}>
     <CardMedia
-    sx={{width: '67%'}}
+    sx={{width: '100%'}}
       component="img"
       height="200"
       image={item.image}
@@ -39,7 +39,7 @@ export default function ProductCard({item}) {
         {item.name}
       </Typography>
       <Typography variant="body2" color="text.secondary">
-       {item.description}
+       {item.made_in}
       </Typography>
       <Typography variant="body2" 
       sx={{color: 'black', fontWeight: 'bold'}}>
@@ -60,11 +60,16 @@ export default function ProductCard({item}) {
 <ShoppingBag
   color={checkProductInCart(item.id) ? 'warning' : ''}
 />
-</IconButton></Box>)}
+</IconButton> 
+{userName ? (<IconButton><ThumbUpAltIcon sx={{cursor: 'pointer',}} onClick={()=>toogleLike(item.id)}/>{item.likes}</IconButton>
+    ):(
+      <IconButton><ThumbUpAltIcon sx={{cursor: 'pointer',}} onClick={()=>navigate('/login')}/>{item.likes}</IconButton>
+      )}
+</Box>)}
    
    
-
-          <ThumbUpAltIcon sx={{cursor: 'pointer'}} onClick={()=>toogleLike(item.id)}/>{item.likes}
+    
+         
      
     </CardActions>
   </Card>

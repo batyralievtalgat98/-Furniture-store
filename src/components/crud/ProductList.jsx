@@ -18,7 +18,6 @@ const ProductList = () => {
   useEffect(() => {
     getProducts();
 
-
   }, []);
 
   useEffect(() => {

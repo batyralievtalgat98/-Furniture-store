@@ -1,8 +1,10 @@
 import { Box, Button, Typography } from '@mui/material';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import bed from '../Image/rectangle13.png'
 import './SectionBed.css'
 const SectionBed = () => {
+  const navigate = useNavigate()
   return (
     <Box>
       <img src={bed} alt="" className='sectionBedImg' />
@@ -35,7 +37,7 @@ const SectionBed = () => {
           <Typography sx={{display:{xs:'none',sm:'block'}}} >
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
           </Typography>
-          <Button>VIEW DETAILS</Button>
+          <Button onClick={()=>navigate('/store')}>VIEW DETAILS</Button>
         </Box>
       </Box>
     </Box>

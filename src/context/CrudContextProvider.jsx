@@ -85,6 +85,7 @@ console.log(newProduct);
 
     await axios.post(`${API}`, newProduct2,config)
     getProducts()
+    navigate('/store')
   }
 
   const deleteProduct = async (id) => {
@@ -103,7 +104,7 @@ console.log(newProduct);
 
   const saveEditedProduct = async (newProduct) => {
     let token = JSON.parse(localStorage.getItem('token'));
-    const Authorization = `Bearer ${token.access}`;
+    
 
     const config ={
       headers: {'Content-Type':'multipart/form-data',
@@ -127,6 +128,7 @@ console.log(newProduct);
  
     await axios.patch(`${API}${id}/`, newProduct2,config);
     getProducts()
+    navigate('/store')
 
   }
 
@@ -210,6 +212,21 @@ if(value==='all'){
 
   }
 
+
+  const deleteComm = async(id)=>{
+    let token = JSON.parse(localStorage.getItem('token'));
+
+
+    const config ={
+      headers: {'Content-Type':'multipart/form-data',
+      Authorization: `Bearer ${token.access}`,
+
+    },
+    };
+    await axios.delete(`${API2}comments/${id}/`,config);
+
+  }
+
   return <productContext.Provider value={{
     products: state.products,
     productDetails: state.productDetails,
@@ -226,7 +243,8 @@ if(value==='all'){
     searchFilter,
     toogleLike,
     getComments,
-    addComment
+    addComment,
+    deleteComm
     
   }}
   >{children}</productContext.Provider>

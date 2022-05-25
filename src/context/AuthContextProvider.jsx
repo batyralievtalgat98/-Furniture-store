@@ -27,7 +27,7 @@ const AuthContextProvider = ({ children }) => {
 
     try {
       const res = await axios.post(`${API2}account/register/`, formData, config);
-      // navigate('/login');
+      
 
     } catch (e) {
       console.log(e);
@@ -57,32 +57,35 @@ const AuthContextProvider = ({ children }) => {
       headers: { 'Content-Type': 'multipart/form-data' },
     };
     let formData = new FormData();
-    console.log(value);
     formData.append('email', value);
    console.log(value);
    navigate('/recovery')
     try {
-      await axios.post(`${API2}account/activation/`, formData,config)
+      await axios.post(`${API2}account/password_reset/`, formData,config)
     } catch (error) {
       
     }
 
   }
 
-
-  async function newPassword(activationCode, password) {
+ const [messageNewPassword, setmessageNewPassword] = useState('')
+  async function newPassword(activationCode, password,mail) {
     const config = {
       headers: { 'Content-Type': 'multipart/form-data' },
     };
     let formData = new FormData();
     console.log(activationCode, password);
     formData.append('password', password);
-    formData.append('activation_code', activationCode);
-
+    formData.append('token', activationCode);
+    formData.append('email', mail);
+ 
     try {
-      await axios.post(`${API2}account/activation/`, formData,config)
+      await axios.post(`${API2}account/password_reset/confirm/`, formData,config)
+      navigate('/login')
     } catch (error) {
-      
+let pass= JSON.parse(error.request.responseText)
+      console.log(error);
+      setmessageNewPassword(pass.password[0])
     }
 
   }
@@ -152,7 +155,7 @@ const AuthContextProvider = ({ children }) => {
       let userName = localStorage.getItem('username');
       setUserName(userName);
     } catch (error) {
-      // logout();
+      logout();
     }
   }
 
@@ -186,7 +189,8 @@ const AuthContextProvider = ({ children }) => {
         userName,
         forgotPassCode,
         newPassword,
-        userName
+        userName,
+        messageNewPassword
       }}
     >
       {children}

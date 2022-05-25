@@ -11,11 +11,11 @@ import React from 'react';
 
 const ContactUs = () => {
   return (
-    <div>
+    <Box sx={{background:'#DCE1DA'}}>
       <Box
         noValidate
         autoComplete="off"
-        sx={{ width: '50vw', margin: '10vh auto' }}
+        sx={{ width: '50vw', margin: '0 auto',p:'20px' }}
       >
         <Typography
           sx={{ fontSize: '3em', fontWeight: 600, fontFamily: 'Roboto' }}
@@ -42,14 +42,15 @@ const ContactUs = () => {
           rows="4"
         />
         <Button
-          sx={{ borderRadius: '20px', marginTop: '2%' }}
+          sx={{ borderRadius: '20px', marginTop: '2%',background: 'grey' }}
           variant="contained"
           size="large"
+          
         >
           Get A Query
         </Button>
       </Box>
-    </div>
+    </Box>
   );
 };
 

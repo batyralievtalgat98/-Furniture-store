@@ -14,11 +14,11 @@ import MenuItem from '@mui/material/MenuItem';
 
 import {ADMIN} from '../../helpers/Consts';
 
-import FavoriteIcon from '@mui/icons-material/Favorite';
+
 
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
-import { Link} from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 
 
 import { Badge} from '@mui/material';
@@ -34,11 +34,9 @@ const pages = [
   { name: 'HOME', link: '/', id: 1 },
 
   { name: 'STORE', link: '/store', id: 2 },
- 
-  { name: 'BRAND', link: '/', id: 4 },
   { name: 'ABOUT US', link: '/about', id: 5 },
   { name: 'CONTACT US', link: '/contact_us', id: 6 },
-  // { name: 'ADMIN PAGE', link: '/adminPage', id: 7 },
+
   
 ];
 
@@ -98,7 +96,7 @@ const Navbar = () => {
   };
 
   
-
+const navigate = useNavigate()
 
 
   return (
@@ -190,36 +188,8 @@ const Navbar = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0, display: 'flex' }}>
-          {/* <TextField
-          sx={{mr: '10px', display:{xs: 'none',sm: 'block'}}}
-        fullWidth
-        id="input-with-icon-textfield"
-        label="Search..."
-        // value={search}
-        onChange={(e) => searchFilter(e.target.value)}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon />
-            </InputAdornment>
-          ),
-        }}
-        variant="standard"
-      /> */}
-          {/* <Search sx={{mr: '10px', display:{xs: 'none',sm: 'block'}}} >
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-              value={search}
-              onChange={(e) => setSearch(e.target.value)} 
-                         />
-          </Search> */}
-         <FavoriteIcon 
-          sx={{fontSize: '30px', mt:'5px', mr:'5px'}}
-         />
+         
+         
          <Link to='/card'>
           <Badge badgeContent={count} color="error" sx={{mr:'10px',mt:'5px'}}>
 
@@ -255,9 +225,9 @@ const Navbar = () => {
                 <Link to={setting.link} key={setting.id}>
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   {setting.name==='Logout' ? (
-                    <Typography onClick={logout} textAlign="center">{setting.name}</Typography>
+                    <Typography onClick={logout} textAlign="center" sx={{color: 'black'}}>{setting.name}</Typography>
                   ):(
-                    <Typography textAlign="center">{setting.name}</Typography>
+                    <Typography textAlign="center" sx={{color: 'black'}}>{setting.name}</Typography>
                     )}
                   
                 </MenuItem>

@@ -41,7 +41,7 @@ export default function Cart() {
   const { getCart, cart, changeProductCount, deleteCartProduct } = useCart();
 
   const StyledButton = styled(Button)`
-  background-color: black;
+  background-color: #fafafa;
   color: white;
   padding: 6px 12px;
   border-radius: 20px;

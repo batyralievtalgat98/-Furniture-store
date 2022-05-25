@@ -27,7 +27,7 @@ function Copyright(props) {
     >
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+      Moody Studio
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -170,6 +170,7 @@ function forgotPassFunc(e) {
           </Typography>
           <TextField
           onChange={(e)=>activeCodeFunc(e)}
+          size='small'
           />
           <Button onClick={()=>activationCode(activeCode)}>Send</Button>
         </Box>
@@ -201,7 +202,7 @@ function forgotPassFunc(e) {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/login" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

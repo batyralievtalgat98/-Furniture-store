@@ -31,11 +31,12 @@ const theme = createTheme();
 
 export default function PasswordRecovery() {
  
-  const { newPassword } = useAuth();
+  const { newPassword,messageNewPassword } = useAuth();
   const [password, setNewPassword] = React.useState('')
   const [activationCode, setActivationCode] = React.useState('')
-  function handlePass(password, activationCode) {
-    newPassword(activationCode, password);
+  const [mail, setMail] = React.useState('')
+  function handlePass(password, activationCode,mail) {
+    newPassword(activationCode, password,mail);
   }
 
 
@@ -61,11 +62,36 @@ export default function PasswordRecovery() {
             Recovery Password
           </Typography>
           <Box component="form" noValidate sx={{ mt: 1 }}>
+            <Typography>{messageNewPassword}</Typography>
+          <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="email"
+              label="email"
+              type="email"
+              id="email"
+              
+              onChange={(e) => setMail(e.target.value)}
+
+            />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label=" New Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={(e) => setNewPassword(e.target.value)}
+  
+              />
             <TextField
               margin="normal"
               required
               fullWidth
-              id="email"
+              
               label="Activation Code"
               name="email"
               autoComplete="email"
@@ -73,25 +99,13 @@ export default function PasswordRecovery() {
               onChange={(e) => setActivationCode(e.target.value)}
 
             />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label=" New Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={(e) => setNewPassword(e.target.value)}
-
-            />
             
             <Button
-              type="submit"
+              
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              onClick={() => handlePass(password, activationCode)}
+              onClick={() => handlePass(password, activationCode,mail)}
 
             >
               Send

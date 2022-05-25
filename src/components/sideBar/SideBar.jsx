@@ -56,7 +56,7 @@ const SideBar = () => {
         >
           <MenuItem value={'price'}>Price</MenuItem>
           <MenuItem value={'category'}>Category</MenuItem>
-          <MenuItem value={'country'}>Сountry</MenuItem>
+          <MenuItem value={'made_in'}>Сountry</MenuItem>
         </Select>
       </FormControl>
      

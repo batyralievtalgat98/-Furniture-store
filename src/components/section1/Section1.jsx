@@ -1,7 +1,15 @@
-import { Box, Button, Typography } from '@mui/material';
 import React from 'react';
+import { Box, Button, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { useProducts } from '../../context/CrudContextProvider';
 import  image2  from "../Image/image 2.png";
-const section1 = () => {
+
+
+
+
+const Section1 = () => {
+
+const navigate= useNavigate();
   return (
     <>
     <Box sx={{background: '#DBD0CC', display: 'flex', flexWrap:{ xs:'wrap',sm:'nowrap'}}}>
@@ -11,11 +19,11 @@ const section1 = () => {
 <Typography sx={{fontSize:{ xs:'20px',sm:'3.5vw'}, maxWidth: '466px', fontWeight: '700', color: '#A86A3D'}}>SALE UP 50%
 
 MODERN FURNITURE</Typography>
-<Button sx={{mt:'20px'}}>VIEW NOW</Button>
+<Button sx={{mt:'20px'}} onClick={()=>{navigate('/store')}}>VIEW NOW</Button>
       </Box>
     </Box>
     </>
   );
 };
 
-export default section1;
+export default Section1;

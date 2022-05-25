@@ -78,7 +78,7 @@ const SideBarSort = ({state}) => {
       </RadioGroup>
     </FormControl>
    )
- } else if(state==='country'){
+ } else if(state==='made_in'){
    return(
   <FormControl >
   <FormLabel id="demo-radio-buttons-group-label">Country</FormLabel>
@@ -94,21 +94,21 @@ const SideBarSort = ({state}) => {
        label="All"   />
 
     <FormControlLabel
-      value="russia"
+      value="Russia"
       control={<Radio color="error" />}
       label="Russia"
      
     />
 
     <FormControlLabel
-      value="usa"
+      value="Usa"
       control={<Radio color="error" />}
       label="Usa"
       
     />
 
     <FormControlLabel
-      value="japan"
+      value="Japan"
       control={<Radio color="error" />}
       label="Japan"
       

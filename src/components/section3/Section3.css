@@ -1,0 +1,10 @@
+.imageOurPartners{
+  display: flex !important;
+  justify-content: center;
+  margin: 20px
+}
+
+.OurPartners{
+ margin: 0 auto !important;
+  padding: 0 auto !important
+}
